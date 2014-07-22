@@ -5,16 +5,28 @@ class Vector2 < Vector
     Math.sqrt((self[0]-v[0])**2 + (self[1]-v[1])**2)
   end
 
-  # def +(num)
-  #   if(num.class == Float || num.class == Fixnum)
-  #     (0..1).each{|i|
-  #       self[i] += num
-  #     }
-  #   else
-  #     puts num.class
-  #     raise TypeError
-  #   end
-  # end
+  def angle(v)
+    Vector2.angle(self, v)
+  end
+
+  def +(num)
+    raise TypeError unless num.class == Float || num.class == Fixnum
+    (0..1).each{|i|
+      self[i] = self[i] + num
+    }
+    self
+  end
+
+  def <<(num)
+    raise TypeError unless num.class == Float || num.class == Fixnum
+    self[self.size] = num
+  end
+
+  def self.angle(v1,v2)
+    a1 = Math.atan2(v1[1], v1[0])
+    a2 = Math.atan2(v2[1], v2[0])
+    a2-a1
+  end
 
   def self.pathlength(*points)
     length = 0
